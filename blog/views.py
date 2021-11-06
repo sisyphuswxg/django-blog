@@ -3,13 +3,41 @@ import re
 import markdown
 from django.shortcuts import render, get_object_or_404
 
-from .models import Post
+from .models import Post, Category, Tag
 
 
 def index(request):
     post_list = Post.objects.all().order_by('-created_time')
     context = {'post_list': post_list}
     return render(request, 'blog/index.html', context=context)
+
+
+def archive(request, year, month):
+    """
+    归档： 年-月
+    """
+    post_list = Post.objects.filter(created_time__year=year,
+                                    created_time__month=month
+                                    ).order_by('-created_time')
+    return render(request, 'blog/index.html', context={'post_list': post_list})
+
+
+def category(request, pk):
+    '''
+    分类: category过滤获取
+    '''
+    cate = get_object_or_404(Category, pk=pk)
+    post_list = Post.objects.filter(category=cate).order_by('-created_time')
+    return render(request, 'blog/index.html', context={'post_list': post_list})
+
+
+def tag(request, pk):
+    '''
+    标签: tag过滤获取
+    '''
+    tag = get_object_or_404(Tag, pk=pk)
+    post_list = Post.objects.filter(tags=tag).order_by('-created_time')
+    return render(request, 'blog/index.html', context={'post_list': post_list})
 
 
 def detail(request, pk):
