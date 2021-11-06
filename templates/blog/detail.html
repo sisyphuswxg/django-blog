@@ -1,5 +1,10 @@
-{% extends 'base.html' %}
+{% extends '../base.html' %}
 
+{% load comments_extras %}
+
+
+
+<!-- 文章内容展示区 -->
 {% block main %}
     <article class="post post-{{ post.pk }}">
         <header class="entry-header">
@@ -18,13 +23,21 @@
             {{ post.body | safe }}
         </div>
     </article>
+
     <section class="comment-area">
-      ...
+        <hr>
+        <!-- 评论 -->
+        <h3>发表评论</h3>
+        {% show_comment_form post %}
+        <div class="comment-list-panel">
+            {% show_comments post %}
+        </div>
+
     </section>
 {% endblock main %}
 
 
-{#侧边栏文章目录#}
+<!-- 侧边栏文章目录 -->
 {% block toc %}
     {% if post.toc %}
         <div class="widget widget-content">

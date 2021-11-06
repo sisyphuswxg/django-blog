@@ -1,0 +1,31 @@
+<!--
+    action: 指定表单内容提交的地址，这里是提交给comments:comment视图函数对应的URL
+    method：指定提交表单时的HTTP请求类型，一般提交都是使用POST
+-->
+<form action="{% url 'comments:comment' post.pk %}" method="post" class="comment-form">
+    <!-- csrf_token：会自动渲染位一个隐藏类型的HTML input控件，其值为一个随机字符串，作用是为了防CSRF攻击 -->
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-md-4">
+      <label for="{{ form.name.id_for_label }}">{{ form.name.label }}：</label>
+      {{ form.name }}
+      {{ form.name.errors }}
+    </div>
+    <div class="col-md-4">
+      <label for="{{ form.email.id_for_label }}">{{ form.email.label }}：</label>
+      {{ form.email }}
+      {{ form.email.errors }}
+    </div>
+    <div class="col-md-4">
+      <label for="{{ form.url.id_for_label }}">{{ form.url.label }}：</label>
+      {{ form.url }}
+      {{ form.url.errors }}
+    </div>
+    <div class="col-md-12">
+      <label for="{{ form.text.id_for_label }}">{{ form.text.label }}：</label>
+      {{ form.text }}
+      {{ form.text.errors }}
+      <button type="submit" class="comment-btn">发表</button>
+    </div>
+  </div>    <!-- row -->
+</form>
