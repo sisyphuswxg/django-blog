@@ -51,6 +51,11 @@ def detail(request, pk):
         - toc：自动生成目录
     '''
     post = get_object_or_404(Post, pk=pk)
+
+    # 阅读量+1
+    post.increase_views()
+
+
     md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
         'markdown.extensions.fenced_code',

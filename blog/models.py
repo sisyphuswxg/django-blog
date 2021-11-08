@@ -56,6 +56,8 @@ class Post(models.Model):
     category = models.ForeignKey(Category, verbose_name='分类', on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, verbose_name='标签', blank=True)
     author = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
+    # 新增views字段，记录阅读量
+    views = models.PositiveIntegerField(default=0, editable=False)
 
     class Meta:
         verbose_name = '文章'  # verbose_name 指定对应的model在admin后台的显示名称
@@ -84,3 +86,7 @@ class Post(models.Model):
         reverse() 函数会解析视图函数对应的url,如若Post的id是12，则函数返回的就是/posts/12
         '''
         return reverse('blog:detail', kwargs={'pk': self.pk})
+
+    def increase_views(self):
+        self.views += 1
+        self.save(update_fields=['views'])
