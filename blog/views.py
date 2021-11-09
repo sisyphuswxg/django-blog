@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView
 from markdown.extensions.toc import TocExtension
+from pure_pagination import PaginationMixin
 
 from .models import Post, Category, Tag
 
@@ -14,7 +15,13 @@ from .models import Post, Category, Tag
 #     context = {'post_list': post_list}
 #     return render(request, 'blog/index.html', context=context)
 # use ListView ↓↓↓
-class IndexView(ListView):
+# class IndexView(ListView):
+#     model = Post
+#     template_name = 'blog/index.html'
+#     context_object_name = 'post_list'
+#     paginate_by = 10
+# pagination ↓↓↓
+class IndexView(PaginationMixin, ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'post_list'
