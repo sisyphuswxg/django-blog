@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'comments.apps.CommentsConfig',
     # 分页
     'pure_pagination',
+    # restful
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
